@@ -1,7 +1,7 @@
 {
   "name": "breakline",
   "main": "./lib/breakline",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Breakline is an extensible inline code debugger.",
   "activationEvents": [
     "breakline:run",
