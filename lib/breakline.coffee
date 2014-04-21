@@ -9,9 +9,19 @@ module.exports =
   activate: ->
     atom.workspaceView.command "breakline:run", => @run()
     atom.workspaceView.command "breakline:insert", => @insertBreakline()
+    atom.workspaceView.command "breakline:watchToggle", => @watchToggle()
     atom.workspaceView.command "breakline:insertRun", =>
       @insertBreakline()
       @run()
+
+    {editor} = @getEditor()
+    editor.on "watch:start", ->
+      name = path.basename editor.buffer.file?.path or "untitled"
+      alert "Breakline is watching changes of #{name}"
+
+    editor.on "watch:stop", ->
+      name = path.basename editor.buffer.file?.path or "untitled"
+      alert "Breakline stopped watching changes of #{name}"
 
   serialize: ->
     #
@@ -54,6 +64,19 @@ module.exports =
 
     editor.insertNewlineBelow()
     editor.insertText "#{prefix} #{word}"
+
+  watchToggle: ->
+    {editor} = @getEditor()
+    $activeEditorView = $ atom.workspaceView.getActiveView()
+    if @watching
+      @watching = no
+      $activeEditorView.off "keyup"
+      editor.emit "watch:stop"
+    else
+      @watching = yes
+      @run()
+      $activeEditorView.on "keyup", _.debounce (=> @run()), 1000
+      editor.emit "watch:start"
 
   run: ->
 

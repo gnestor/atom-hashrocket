@@ -6,7 +6,8 @@
   "activationEvents": [
     "breakline:run",
     "breakline:insert",
-    "breakline:insertRun"
+    "breakline:insertRun",
+    "breakline:watchToggle"
   ],
   "repository": "https://github.com/webBoxio/atom-breakline",
   "license": "MIT",

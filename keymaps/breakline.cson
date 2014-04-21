@@ -11,3 +11,4 @@
   'cmd-;': 'breakline:run'
   'cmd-:': 'breakline:insert'
   'cmd-\'': 'breakline:insertRun'
+  'cmd-alt-;': 'breakline:watchToggle'
