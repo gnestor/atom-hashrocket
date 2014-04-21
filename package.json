@@ -1,0 +1,19 @@
+{
+  "name": "breakline",
+  "main": "./lib/breakline",
+  "version": "0.0.0",
+  "description": "Breakline is an extensible inline code debugger.",
+  "activationEvents": [
+    "breakline:run",
+    "breakline:insert",
+    "breakline:insertRun"
+  ],
+  "repository": "https://github.com/webBoxio/atom-breakline",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+    "coffee-script": "^1.7.1"
+  }
+}
