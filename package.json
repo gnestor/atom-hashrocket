@@ -1,7 +1,7 @@
 {
   "name": "hashrocket",
   "main": "./lib/hashrocket",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Hashrocket is an extensible inline code debugger. Debug code in Atom.",
   "activationEvents": [
     "hashrocket:run",
