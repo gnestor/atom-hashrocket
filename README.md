@@ -29,7 +29,10 @@ Features:
   - `CTRL + ALT + ;`: Toggle watching current file's Hashrocket Markers realtime.
 
 Watch code Realtime:
+
 ![Atom Hashrocket](https://dl.dropboxusercontent.com/u/20947008/webbox/atom/atom-hashrocket.gif)
 
+
 Use menu support:
+
 ![Atom Hashrocket](https://dl.dropboxusercontent.com/u/20947008/webbox/atom/atom-breakline.gif)
