@@ -9,7 +9,7 @@ module.exports =
       stdout: (data)-> response += data.toString()
       exit: -> callback response
 
-  printer      : "puts \"<$1>\" + ($2) + \"</$1>\""
+  printer      : "puts \"<$1>\" + ($2).to_s + \"</$1>\""
   prefix       : "#=>"
   matcher      : /(#=>)(.+)/gi
   comment      : "#"
