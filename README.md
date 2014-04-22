@@ -23,9 +23,9 @@ Features:
 
 ## Key Bindings
 
-  - `CTRL + ;`: Run current file's Breaklines.
-  - `CTRL + :`: Insert Breakline.
-  - `CTRL + \`: Insert Breakline and run immediately.
-  - `CTRL + ALT + ;`: Toggle watching current file's Breaklines realtime.
+  - `CTRL + ;`: Run current file's Hashrocket.
+  - `CTRL + :`: Insert Hashrocket Marker.
+  - `CTRL + \`: Insert Hashrocket Marker and run immediately.
+  - `CTRL + ALT + ;`: Toggle watching current file's Hashrocket Markers realtime.
 
 ![Atom Breakline](https://dl.dropboxusercontent.com/u/20947008/webbox/atom/atom-breakline.gif)
