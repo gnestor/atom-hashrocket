@@ -1,6 +1,6 @@
 # Hashrocket: Inline Code Debugger with Markers
 
-New way of easy debugging for **JavaScript, CoffeeScript, Python, Ruby and PHP** developers.
+New way of easy debugging for **JavaScript, CoffeeScript, Python, Ruby, PHP and Bash** developers.
 
 ```bash
 apm install hashrocket
@@ -16,7 +16,7 @@ Features:
   - Easiest way of debugging.
   - Watching variables on comments.
   - Helper menus.
-  - **JavaScript, CoffeeScript, Python, Ruby and PHP** support.
+  - **JavaScript, CoffeeScript, Python, Ruby, PHP and Bash** support.
   - Unreachable code detection.
   - Extensible. (You can add another language support very easily)
   - Realtime mode.
