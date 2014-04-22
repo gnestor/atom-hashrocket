@@ -7,21 +7,21 @@ path                 = require 'path'
 module.exports =
 
   activate: ->
-    atom.workspaceView.command "breakline:run", => @run()
-    atom.workspaceView.command "breakline:insert", => @insertBreakline()
-    atom.workspaceView.command "breakline:watchToggle", => @watchToggle()
-    atom.workspaceView.command "breakline:insertRun", =>
-      @insertBreakline()
+    atom.workspaceView.command "hashrocket:run", => @run()
+    atom.workspaceView.command "hashrocket:insert", => @insertHashrocket()
+    atom.workspaceView.command "hashrocket:watchToggle", => @watchToggle()
+    atom.workspaceView.command "hashrocket:insertRun", =>
+      @insertHashrocket()
       @run()
 
     {editor} = @getEditor()
     editor.on "watch:start", ->
       name = path.basename editor.buffer.file?.path or "untitled"
-      alert "Breakline is watching changes of #{name}"
+      alert "Hashrocket is watching changes of #{name}"
 
     editor.on "watch:stop", ->
       name = path.basename editor.buffer.file?.path or "untitled"
-      alert "Breakline stopped watching changes of #{name}"
+      alert "Hashrocket stopped watching changes of #{name}"
 
   serialize: ->
     #
@@ -45,7 +45,7 @@ module.exports =
 
   generateToken: ->
     token = Math.random().toString(36)[2..].toUpperCase()
-    "ATOM-BL-#{token}"
+    "ATOM-HR-#{token}"
 
   getEditor: ->
     editor = atom.workspace.activePane.getActiveEditor()
@@ -56,7 +56,7 @@ module.exports =
     name: grammar.name
     code: editor.getText()
 
-  insertBreakline: ->
+  insertHashrocket: ->
     {editor, scope} = @getEditor()
     {prefix} = Brokers.clients[scope]
 
@@ -87,7 +87,7 @@ module.exports =
     broker = Brokers.clients[scope]
 
     unless broker
-      alert "#{name} broker doesn't exist for Breakline."
+      alert "#{name} broker doesn't exist for Hashrocket."
       return
 
     {matcher, exec, comment} = broker

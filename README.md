@@ -1,9 +1,15 @@
-# Breakline: Inline Code Debugger
+# Hashrocket: Inline Code Debugger with Markers
 
 New way of easy debugging for **JavaScript, CoffeeScript, Python, Ruby and PHP** developers.
 
 ```bash
-apm install breakline
+apm install hashrocket
+```
+
+What is a Marker:
+
+```
+#=> {expression}
 ```
 
 Features:

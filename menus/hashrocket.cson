@@ -1,0 +1,22 @@
+# See https://atom.io/docs/latest/creating-a-package#menus for more details
+'context-menu':
+  '.overlayer':
+      'Execute code with Hashrocket': 'hashrocket:run'
+      'Watch code with Hashrocket toggle': 'hashrocket:watchToggle'
+      'Insert Hashrocket Marker': 'hashrocket:insert'
+      'Insert Hashrocket Marker for word and run': 'hashrocket:insertRun'
+
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Hashrocket'
+      'submenu': [
+        { 'label': 'Execute code with Hashrocket', 'command': 'hashrocket:run' }
+        { 'label': 'Watch code with Hashrocket toggle', 'command': 'hashrocket:watchToggle'}
+        { 'label': 'Insert Hashrocket Marker', 'command': 'hashrocket:insert' }
+        { 'label': 'Insert Hashrocket Marker for word and run', 'command': 'hashrocket:insertRun'}
+      ]
+    ]
+  }
+]

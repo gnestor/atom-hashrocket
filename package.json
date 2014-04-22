@@ -1,15 +1,15 @@
 {
-  "name": "breakline",
-  "main": "./lib/breakline",
+  "name": "hashrocket",
+  "main": "./lib/hashrocket",
   "version": "0.2.0",
-  "description": "Breakline is an extensible inline code debugger.",
+  "description": "Hashrocket is an extensible inline code debugger. Debug code in Atom.",
   "activationEvents": [
-    "breakline:run",
-    "breakline:insert",
-    "breakline:insertRun",
-    "breakline:watchToggle"
+    "hashrocket:run",
+    "hashrocket:insert",
+    "hashrocket:insertRun",
+    "hashrocket:watchToggle"
   ],
-  "repository": "https://github.com/webBoxio/atom-breakline",
+  "repository": "https://github.com/webBoxio/atom-hashrocket",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
