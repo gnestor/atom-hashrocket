@@ -121,7 +121,7 @@ module.exports =
 
         # figure out somehow. CDATA may be useful.
         output = output
-          .replace /\n/g, '' # single line outputs.
+          .replace /\n/g, ' ' # single line outputs.
           .replace /&gt/g, '>'
           .replace /&lt/g, '<'
 
