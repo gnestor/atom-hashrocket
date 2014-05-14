@@ -4,7 +4,7 @@ module.exports =
   exec         : (file, callback)->
     response = ""
     new BufferedProcess
-      command: "/usr/bin/php"
+      command: "/usr/bin/env php"
       args: [file]
       stdout: (data)-> response += data.toString()
       exit: -> callback response

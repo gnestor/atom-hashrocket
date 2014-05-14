@@ -4,7 +4,7 @@ module.exports =
   exec         : (file, callback)->
     response = ""
     new BufferedProcess
-      command: "/usr/local/bin/node"
+      command: "/usr/bin/env node"
       args: [file]
       stdout: (data)-> response += data.toString()
       exit: -> callback response
