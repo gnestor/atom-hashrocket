@@ -4,7 +4,7 @@ module.exports =
   exec         : (file, callback)->
     response = ""
     new BufferedProcess
-      command: "/bin/bash"
+      command: "/usr/bin/env bash"
       args: [file]
       stdout: (data)-> response += data.toString()
       exit: -> callback response

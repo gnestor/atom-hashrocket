@@ -11,7 +11,7 @@ module.exports =
       fs.writeFileSync jsFile, js
       response = ""
       new BufferedProcess
-        command: "/usr/local/bin/node"
+        command: "/usr/bin/env node"
         args: [jsFile]
         stdout: (data)-> response += data.toString()
         exit: -> callback response
