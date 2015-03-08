@@ -16,23 +16,23 @@ module.exports =
     nodeExecutablePath:
       type: 'string'
       description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
-      default: if os.platform() isnt 'win32' then '/usr/bin/env node' else 'node'
+      default: if os.platform() is "win32" then "node" else if os.platform() is "linux" then "nodejs" else "/usr/bin/env node"
     rubyExecutablePath:
       type: 'string'
       description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
-      default: if os.platform() isnt 'win32' then '/usr/bin/env ruby' else 'ruby'
+      default: if os.platform() is "win32" then "ruby" else if os.platform() is "linux" then "ruby" else "/usr/bin/env ruby"
     phpExecutablePath:
       type: 'string'
       description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
-      default: if os.platform() isnt 'win32' then '/usr/bin/env php' else 'php'
+      default: if os.platform() is "win32" then "php" else if os.platform() is "linux" then "php" else "/usr/bin/env php"
     pythonExecutablePath:
       type: 'string'
       description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
-      default: if os.platform() isnt 'win32' then '/usr/bin/env python' else 'python'
+      default: if os.platform() is "win32" then "python" else if os.platform() is "linux" then "python" else "/usr/bin/env python"
     bashExecutablePath:
       type: 'string'
       description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
-      default: if os.platform() isnt 'win32' then '/usr/bin/env bash' else 'bash'
+      default: if os.platform() is "win32" then "bash" else if os.platform() is "linux" then "bash" else "/usr/bin/env bash"
 
   editorSub  : null
   activeFile : null
@@ -83,9 +83,10 @@ module.exports =
     {editor, scope} = @getEditor()
     {prefix}        = Brokers.clients[scope]
     word            = editor.getWordUnderCursor() or ""
-
+    wordPrefix      = if scope is 'source.shell' then '$' else ''
     editor.insertNewlineBelow()
-    editor.insertText "#{prefix} #{word}"
+
+    editor.insertText "#{prefix} #{wordPrefix}#{word}"
 
   watchToggle: ->
     {editor}    = @getEditor()
@@ -164,4 +165,3 @@ module.exports =
         replaced
 
       @setCode replacedCode
-
