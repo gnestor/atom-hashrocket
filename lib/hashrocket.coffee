@@ -44,7 +44,7 @@ module.exports =
     atom.commands.add 'atom-text-editor', "hashrocket:insertRun", =>
       @insertHashrocket()
       @run()
-    delay = atom.config.get 'hashrocket.watchDebouceRate'
+    @delay = atom.config.get 'hashrocket.watchDebouceRate'
     atom.config.onDidChange 'hashrocket.watchDebouceRate', (values) =>
       @delay = values.newValue
 
@@ -103,7 +103,7 @@ module.exports =
       @run()
 
       item = atom.workspace.getActivePaneItem()
-      @activeFile = item.buffer.file.path.split(/[\\]+/).pop()
+      @activeFile = path.basename(item.buffer.file.path)
       alert "Hashrocket is watching changes of #{@activeFile}"
       activePanel = atom.views.getView item
       activePanel.addEventListener('keydown', handleEvent)
@@ -164,3 +164,4 @@ module.exports =
         replaced
 
       @setCode replacedCode
+
