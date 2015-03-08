@@ -22,11 +22,17 @@ Features:
   - Realtime mode.
 
 ## Key Bindings
+Darwin(Mac)
+  - `CMD + ;`: Run current file's Hashrocket.
+  - `CMD + :`: Insert Hashrocket Marker.
+  - `CMD + \`: Insert Hashrocket Marker and run immediately.
+  - `CMD + ALT + ;`: Toggle watching current file's Hashrocket Markers realtime.
 
+Win32 (Windows) and linux
   - `CTRL + ;`: Run current file's Hashrocket.
-  - `CTRL + :`: Insert Hashrocket Marker.
-  - `CTRL + \`: Insert Hashrocket Marker and run immediately.
-  - `CTRL + ALT + ;`: Toggle watching current file's Hashrocket Markers realtime.
+  - `ALT + ;`: Insert Hashrocket Marker.
+  - `CTRL + ALT + ;`: Insert Hashrocket Marker and run immediately.
+  - `CTRL + W`: Toggle watching current file's Hashrocket Markers
 
 Watch code Realtime:
 
