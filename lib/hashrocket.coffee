@@ -1,85 +1,118 @@
-{BufferedProcess, $} = require 'atom'
-Brokers              = require './brokers'
-fs                   = require 'fs'
-os                   = require 'os'
-path                 = require 'path'
+{GitRepository, CompositeDisposable, Disposable} = require 'atom'
+{$, TextEditorView, View}                        = require 'atom-space-pen-views'
+Brokers                                          = require './brokers'
+fs                                               = require 'fs'
+os                                               = require 'os'
+path                                             = require 'path'
+_                                                = require 'underscore-plus'
 
 module.exports =
+  config:
+    watchDebouceRate:
+      type: 'integer'
+      description: 'This is the amount of delay in ms after input stops before the code will be run. (Min: 700)'
+      default: 700
+      minimum: 700
+    nodeExecutablePath:
+      type: 'string'
+      description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
+      default: if os.platform() is "win32" then "node" else if os.platform() is "linux" then "nodejs" else "/usr/bin/env node"
+    rubyExecutablePath:
+      type: 'string'
+      description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
+      default: if os.platform() is "win32" then "ruby" else if os.platform() is "linux" then "ruby" else "/usr/bin/env ruby"
+    phpExecutablePath:
+      type: 'string'
+      description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
+      default: if os.platform() is "win32" then "php" else if os.platform() is "linux" then "php" else "/usr/bin/env php"
+    pythonExecutablePath:
+      type: 'string'
+      description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
+      default: if os.platform() is "win32" then "python" else if os.platform() is "linux" then "python" else "/usr/bin/env python"
+    bashExecutablePath:
+      type: 'string'
+      description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
+      default: if os.platform() is "win32" then "bash" else if os.platform() is "linux" then "bash" else "/usr/bin/env bash"
 
-  activate: ->
-    atom.workspaceView.command "hashrocket:run", => @run()
-    atom.workspaceView.command "hashrocket:insert", => @insertHashrocket()
-    atom.workspaceView.command "hashrocket:watchToggle", => @watchToggle()
-    atom.workspaceView.command "hashrocket:insertRun", =>
+  editorSub  : null
+  activeFile : null
+  delay      : null
+  activate: (state) ->
+    atom.commands.add 'atom-text-editor', 'hashrocket:run', => @run()
+    atom.commands.add 'atom-text-editor', "hashrocket:insert", => @insertHashrocket()
+    atom.commands.add 'atom-text-editor', "hashrocket:watchToggle", => @watchToggle()
+    atom.commands.add 'atom-text-editor', "hashrocket:insertRun", =>
       @insertHashrocket()
       @run()
-
-    {editor} = @getEditor()
-    editor.on "watch:start", ->
-      name = path.basename editor.buffer.file?.path or "untitled"
-      alert "Hashrocket is watching changes of #{name}"
-
-    editor.on "watch:stop", ->
-      name = path.basename editor.buffer.file?.path or "untitled"
-      alert "Hashrocket stopped watching changes of #{name}"
-
-  serialize: ->
-    #
+    @delay = atom.config.get 'hashrocket.watchDebouceRate'
+    atom.config.onDidChange 'hashrocket.watchDebouceRate', (values) =>
+      @delay = values.newValue
 
   makeBroker: (args...)->
-    {scope} = @getEditor()
-    broker = Brokers.clients[scope]
-
+    {scope}         = @getEditor()
+    broker          = Brokers.clients[scope]
     {exec, printer} = broker
 
-    execute: exec
-    printer: printer.replace /\$(\d+)/gi, (m)-> args[m[1]-1]
+    execute : exec
+    printer : printer.replace /\$(\d+)/gi, (m)-> args[m[1]-1]
 
   setCode: (data)->
     {editor} = @getEditor()
 
-    cursor = editor.getCursorBufferPosition()
+    cursor   = editor.getCursorBufferPosition()
 
     editor.setText data
     editor.setCursorBufferPosition cursor
 
   generateToken: ->
     token = Math.random().toString(36)[2..].toUpperCase()
+
     "ATOM-HR-#{token}"
 
   getEditor: ->
-    editor = atom.workspace.activePane.getActiveEditor()
-    grammar = editor.getGrammar()
+    # workspace = atom.workspace
+    editor    = atom.workspace.getActiveTextEditor()
+    grammar   = editor.getGrammar()
 
-    editor: editor
-    scope: grammar.scopeName
-    name: grammar.name
-    code: editor.getText()
+    editor : editor
+    scope  : grammar.scopeName
+    name   : grammar.name
+    code   : editor.getText()
 
   insertHashrocket: ->
     {editor, scope} = @getEditor()
-    {prefix} = Brokers.clients[scope]
-
-    word = editor.getWordUnderCursor() or ""
-
+    {prefix}        = Brokers.clients[scope]
+    word            = editor.getWordUnderCursor() or ""
+    wordPrefix      = if scope is 'source.shell' then '$' else ''
     editor.insertNewlineBelow()
-    editor.insertText "#{prefix} #{word}"
+
+    editor.insertText "#{prefix} #{wordPrefix}#{word}"
 
   watchToggle: ->
-    {editor} = @getEditor()
-    $activeEditorView = $ atom.workspaceView.getActiveView()
+    {editor}    = @getEditor()
+    activePanel = null
+    handleEvent = _.debounce (=> @run()), @delay
     if @watching
-      @watching = no
-      $activeEditorView.off "keyup"
-      editor.emit "watch:stop"
+      @watching  = no
+      # editor.emit "watch:stop"
+      alert "Hashrocket stopped watching changes of #{@activeFile}"
+      @editorSub?.dispose()
+      @editorSub = null
     else
+      @editorSub = new CompositeDisposable
       @watching = yes
       @run()
-      $activeEditorView.on "keyup", _.debounce (=> @run()), 1000
-      editor.emit "watch:start"
+
+      item = atom.workspace.getActivePaneItem()
+      @activeFile = path.basename(item.buffer.file.path)
+      alert "Hashrocket is watching changes of #{@activeFile}"
+      activePanel = atom.views.getView item
+      activePanel.addEventListener('keydown', handleEvent)
+
+      @editorSub.add new Disposable =>
+        activePanel?.removeEventListener('keydown', handleEvent)
 
   run: ->
-
     fileToken = @generateToken()
 
     {code, scope, name} = @getEditor()
@@ -104,11 +137,12 @@ module.exports =
       tokens.push {token, data, printer}
       printer
 
-    tokenFile = path.join path.sep, "tmp", "#{fileToken}.#{scope}"
+    tokenFile = path.join os.tmpdir(), "#{fileToken}.#{scope}"
     fs.writeFileSync tokenFile, tokenizedCode
 
     exec tokenFile, (data)=>
       fs.unlink tokenFile
+      fs.unlink tokenFile + ".js" if scope is "source.coffee"
       html = $ "<div>#{data}</div>"
       for token, index in tokens
         tokenInOut = html.find(token.token).last()

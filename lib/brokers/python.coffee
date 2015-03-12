@@ -4,10 +4,10 @@ module.exports =
   exec         : (file, callback)->
     response = ""
     new BufferedProcess
-      command: "/usr/bin/env python"
-      args: [file]
-      stdout: (data)-> response += data.toString()
-      exit: -> callback response
+      command : atom.config.get "hashrocket.pythonExecutablePath"
+      args    : [file]
+      stdout  : (data)-> response += data.toString()
+      exit    : -> callback response
 
   printer      : "print \"<$1>\", ($2), \"</$1>\""
   prefix       : "#=>"
