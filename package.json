@@ -3,12 +3,6 @@
   "main": "./lib/hashrocket",
   "version": "0.4.5",
   "description": "Hashrocket is an extensible inline code debugger. Debug code in Atom.",
-  "activationEvents": [
-    "hashrocket:run",
-    "hashrocket:insert",
-    "hashrocket:insertRun",
-    "hashrocket:watchToggle"
-  ],
   "repository": "https://github.com/webBoxio/atom-hashrocket",
   "license": "MIT",
   "engines": {
