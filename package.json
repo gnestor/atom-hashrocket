@@ -1,7 +1,7 @@
 {
   "name": "hashrocket",
   "main": "./lib/hashrocket",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "Hashrocket is an extensible inline code debugger. Debug code in Atom.",
   "repository": "https://github.com/webBoxio/atom-hashrocket",
   "license": "MIT",
