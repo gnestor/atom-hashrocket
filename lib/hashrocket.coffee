@@ -14,25 +14,30 @@ module.exports =
       default: 700
       minimum: 700
     nodeExecutablePath:
+      title: 'Path to node binary'
       type: 'string'
       description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
-      default: if os.platform() is "win32" then "node" else if os.platform() is "linux" then "nodejs" else "/usr/bin/env node"
+      default: if os.platform() is "win32" or "darwin" then "node" else if os.platform() is "linux" then "nodejs" else "/usr/bin/env node"
     rubyExecutablePath:
+      title: 'Path to ruby binary'
       type: 'string'
       description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
-      default: if os.platform() is "win32" then "ruby" else if os.platform() is "linux" then "ruby" else "/usr/bin/env ruby"
+      default: if os.platform() is "win32" or "darwin" then "ruby" else if os.platform() is "linux" then "ruby" else "/usr/bin/env ruby"
     phpExecutablePath:
+      title: 'Path to php binary'
       type: 'string'
       description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
-      default: if os.platform() is "win32" then "php" else if os.platform() is "linux" then "php" else "/usr/bin/env php"
+      default: if os.platform() is "win32" or "darwin" then "php" else if os.platform() is "linux" then "php" else "/usr/bin/env php"
     pythonExecutablePath:
+      title: 'Path to python binary'
       type: 'string'
       description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
-      default: if os.platform() is "win32" then "python" else if os.platform() is "linux" then "python" else "/usr/bin/env python"
+      default: if os.platform() is "win32" or "darwin" then "python" else if os.platform() is "linux" then "python" else "/usr/bin/env python"
     bashExecutablePath:
+      title: 'Path to bash binary'
       type: 'string'
       description: 'Command is run in process.env. If you want to specify a specific executable do so here.'
-      default: if os.platform() is "win32" then "bash" else if os.platform() is "linux" then "bash" else "/usr/bin/env bash"
+      default: if os.platform() is "win32" or "darwin" then "bash" else if os.platform() is "linux" then "bash" else "/usr/bin/env bash"
 
   editorSub  : null
   activeFile : null
